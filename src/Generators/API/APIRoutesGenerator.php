@@ -27,11 +27,8 @@ class APIRoutesGenerator extends BaseGenerator
 
         $this->routeContents = file_get_contents($this->path);
 
-        if (!empty($this->commandData->config->prefixes['route'])) {
-            $routesTemplate = get_template('api.routes.prefix_routes', 'laravel-generator');
-        } else {
-            $routesTemplate = get_template('api.routes.routes', 'laravel-generator');
-        }
+        $routesTemplate = get_template('api.routes.routes', 'laravel-generator');
+
 
         $this->routesTemplate = fill_template($this->commandData->dynamicVars, $routesTemplate);
     }
@@ -40,7 +37,7 @@ class APIRoutesGenerator extends BaseGenerator
     {
         $this->routeContents .= "\n\n".$this->routesTemplate;
         $existingRouteContents = file_get_contents($this->path);
-        if (Str::contains($existingRouteContents, "Route::resource('".$this->commandData->config->mSnakePlural."',")) {
+        if (Str::contains($existingRouteContents, "Route::resource('".$this->commandData->config->mCamelPlural."',")) {
             $this->commandData->commandObj->info('Menu '.$this->commandData->config->mPlural.'is already exists, Skipping Adjustment.');
 
             return;

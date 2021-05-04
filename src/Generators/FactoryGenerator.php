@@ -26,7 +26,7 @@ class FactoryGenerator extends BaseGenerator
     public function __construct(CommandData $commandData)
     {
         $this->commandData = $commandData;
-        $this->path = $commandData->config->pathFactory;
+        $this->path = $commandData->config->pathFactory.$this->commandData->modelName.'/';
         $this->fileName = $this->commandData->modelName.'Factory.php';
     }
 
@@ -35,7 +35,6 @@ class FactoryGenerator extends BaseGenerator
         $templateData = get_template('factories.model_factory', 'laravel-generator');
 
         $templateData = $this->fillTemplate($templateData);
-
         FileUtil::createFile($this->path, $this->fileName, $templateData);
 
         $this->commandData->commandObj->comment("\nFactory created: ");
