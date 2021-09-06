@@ -26,7 +26,10 @@ class FactoryGenerator extends BaseGenerator
     public function __construct(CommandData $commandData)
     {
         $this->commandData = $commandData;
-        $this->path = $commandData->config->pathFactory.$this->commandData->modelName.'/';
+        $this->path = $commandData->config->pathFactory.'/';
+        if($commandData->config->getOption('prefix')){
+            $this->path = $commandData->config->pathFactory.$this->commandData->modelName.'/';
+        }
         $this->fileName = $this->commandData->modelName.'Factory.php';
     }
 

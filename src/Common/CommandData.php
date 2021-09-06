@@ -150,7 +150,6 @@ class CommandData
         $this->commandInfo('Enter "exit" to finish');
 
         $this->addPrimaryKey();
-
         while (true) {
             $fieldInputStr = $this->commandObj->ask('Field: (name db_type html_type options)', '');
 
@@ -181,8 +180,8 @@ class CommandData
                 $this->relations[] = GeneratorFieldRelation::parseRelation($relation);
             }
         }
-
         if (config('infyom.laravel_generator.timestamps.enabled', true)) {
+
             $this->addTimestamps();
         }
     }
@@ -251,6 +250,10 @@ class CommandData
                             $this->relations[] = GeneratorFieldRelation::parseRelation($field['relation']);
                         }
                     }
+                }
+                if (config('infyom.laravel_generator.timestamps.enabled', true)) {
+
+                    $this->addTimestamps();
                 }
             } else {
                 $fileContents = $this->getOption('jsonFromGUI');

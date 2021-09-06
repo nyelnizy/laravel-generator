@@ -26,6 +26,9 @@ class SeederGenerator extends BaseGenerator
     {
         $this->commandData = $commandData;
         $this->path = $commandData->config->pathSeeder;
+        if($commandData->config->getOption('prefix')){
+            $this->path = $commandData->config->pathSeeder.$this->commandData->modelName.'/';
+        }
         $this->fileName = $this->commandData->config->mPlural.'TableSeeder.php';
     }
 

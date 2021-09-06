@@ -7,6 +7,8 @@ use InfyOm\Generator\Commands\API\APIControllerGeneratorCommand;
 use InfyOm\Generator\Commands\API\APIGeneratorCommand;
 use InfyOm\Generator\Commands\API\APIRequestsGeneratorCommand;
 use InfyOm\Generator\Commands\API\TestsGeneratorCommand;
+use InfyOm\Generator\Commands\API\GenerateCrud;
+use InfyOm\Generator\Commands\API\CrudRollBack;
 use InfyOm\Generator\Commands\APIScaffoldGeneratorCommand;
 use InfyOm\Generator\Commands\Common\MigrationGeneratorCommand;
 use InfyOm\Generator\Commands\Common\ModelGeneratorCommand;
@@ -112,6 +114,14 @@ class InfyOmGeneratorServiceProvider extends ServiceProvider
             return new PublishUserCommand();
         });
 
+        $this->app->singleton('crud.generate', function ($app) {
+            return new GenerateCrud();
+        });
+
+        $this->app->singleton('crud.rollback', function ($app) {
+            return new CrudRollBack();
+        });
+
         $this->commands([
             'infyom.publish',
             'infyom.api',
@@ -130,6 +140,8 @@ class InfyOmGeneratorServiceProvider extends ServiceProvider
             'infyom.scaffold.views',
             'infyom.rollback',
             'infyom.publish.user',
+            'crud.generate',
+            'crud.rollback'
         ]);
     }
 }

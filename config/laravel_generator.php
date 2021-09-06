@@ -52,6 +52,8 @@ return [
         'factory'           => database_path('factories/'),
 
         'view_provider'     => app_path('Providers/ViewServiceProvider.php'),
+
+        'model_files'       => app_path('ModelJson'),
     ],
 
     /*
