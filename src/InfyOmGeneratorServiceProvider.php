@@ -33,9 +33,13 @@ class InfyOmGeneratorServiceProvider extends ServiceProvider
     public function boot()
     {
         $configPath = __DIR__.'/../config/laravel_generator.php';
+        $samplePath = __DIR__.'/../samples/fields_sample.php';
 
         $this->publishes([
             $configPath => config_path('infyom/laravel_generator.php'),
+        ]);
+        $this->publishes([
+            $samplePath => app_path('ModelJson/fields_sample.json'),
         ]);
     }
 
