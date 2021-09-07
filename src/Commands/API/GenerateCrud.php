@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands;
+namespace InfyOm\Generator\Commands\API;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
