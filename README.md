@@ -37,3 +37,8 @@ This is just a bit of modification to a fork of the original  [Laravel Infyom La
  "appointer/swaggervel": "dev-master"
 
  <b>Then run composer update</b>
+
+<b>
+run php artisan infyom:publish &&
+php artisan vendor:publish --provider="InfyOm\Generator\InfyOmGeneratorServiceProvider"
+</b>
