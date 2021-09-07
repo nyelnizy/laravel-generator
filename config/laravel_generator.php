@@ -53,7 +53,7 @@ return [
 
         'view_provider'     => app_path('Providers/ViewServiceProvider.php'),
 
-        'model_files'       => app_path('ModelJson'),
+        'model_files'       => 'app/ModelJson',
     ],
 
     /*
