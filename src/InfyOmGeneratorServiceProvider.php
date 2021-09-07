@@ -144,8 +144,8 @@ class InfyOmGeneratorServiceProvider extends ServiceProvider
             'infyom.scaffold.views',
             'infyom.rollback',
             'infyom.publish.user',
-            // 'crud.generate',
-            // 'crud.rollback'
+            'crud.generate',
+            'crud.rollback'
         ]);
     }
 }
