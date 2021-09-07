@@ -1,6 +1,6 @@
 <?php
 
-namespace InfyOm\Generator\Commands\API;
+namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
@@ -48,7 +48,12 @@ class GenerateCrud extends Command
             $model_files_path = config('infyom.laravel_generator.path.model_files');
             if (is_null($this->option('all'))) {
                 if(is_null($model_name) || is_null($file_name)){
-                    throw  new \Exception('command usage, php artisan crud:generate ModelName model_file.json');
+                    if(!is_null($model_name)){
+                        $file_name = strtolower($model_name) . '.json';
+                    }else{
+                        throw  new \Exception('command usage, php artisan crud:generate ModelName model_file.json (model_file is optional)');
+                    }
+                    
                 }
                 $this->info("Generating Crud for $model_name...");
                 $this->generateCrud($model_name, "$model_files_path/$file_name", $pfx);
