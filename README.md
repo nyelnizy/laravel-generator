@@ -35,3 +35,5 @@ This is just a bit of modification to a fork of the original  [Laravel Infyom La
 
  "infyomlabs/laravel-generator": "dev-fix-1.0",
  "appointer/swaggervel": "dev-master"
+
+ <b>Then run composer update</b>
