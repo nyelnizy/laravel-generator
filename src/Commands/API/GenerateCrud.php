@@ -125,7 +125,8 @@ class GenerateCrud extends Command
     private function generateTypes(array $eloquent_schema, string $model_name)
     {
         $fields = "";
-        foreach($eloquent_schema as $schema){
+        $total = count($eloquent_schema);
+        foreach($eloquent_schema as $index=>$schema){
             $name = $schema->name;
             $type = $schema->dbType;
             $required = false;
@@ -134,7 +135,11 @@ class GenerateCrud extends Command
             }
             $type = $this->types[strtolower($type)].($required?'!':'');
             $fields_contents = $this->getStubContents(['FIELD_NAME'=>$name,'FIELD_TYPE'=>$type], 'field');
-            $fields.=$fields_contents."\n";
+            if($index == $total-1){
+                $fields.="\t".$fields_contents;
+            }else{
+                $fields.="\t".$fields_contents."\n";
+            }
         }
 
         $variables = ['MODEL' => $this->getSingularClassName($model_name), 'FIELDS' => $fields];

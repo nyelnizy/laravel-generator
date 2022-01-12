@@ -1,3 +1,6 @@
 type $MODEL$ {
     $FIELDS$
 }
+
+# Copy and paste the following import statement into schema.graphql only once
+# import models/*.graphql
