@@ -2,7 +2,6 @@
 
 namespace InfyOm\Generator\Commands\API;
 
-use Exception;
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Pluralizer;
@@ -109,22 +108,21 @@ class GenerateCrud extends Command
 
     private function generateCrud(string $model_name, string $file_path, $pfx, $is_graphql)
     {
-       try{
         if ($is_graphql) {
+            $this->info("Starting...");
             Artisan::call("infyom:api $model_name
         --fieldsFile=$file_path --skip=views,menu,routes,controllers,tests
          --factory $pfx --no-interaction");
+         $this->info("Ending...");
             $this->info("Generating Graphql types...");
             $contents = json_decode(file_get_contents($file_path));
             $this->generateTypes($contents, $model_name);
         } else {
+            $this->info("No Gf...");
             Artisan::call("infyom:api $model_name
         --fieldsFile=$file_path --skip=views,menu
         --seeder --factory $pfx --no-interaction");
         }
-       }catch(Exception $e){
-           var_dump($e->getMessage());
-       }
     }
 
     private function generateTypes(array $eloquent_schema, string $model_name)
