@@ -67,7 +67,7 @@ class GenerateCrud extends Command
         if ($this->option('prefix')) {
             $pfx = "--prefix=$model_name";
         }
-        $is_graphql = $this->option('prefix');
+        $is_graphql = !is_null($this->option('graphql'));
         try {
             $model_files_path = config('infyom.laravel_generator.path.model_files');
             if (is_null($this->option('all'))) {
