@@ -136,11 +136,13 @@ class GenerateCrud extends Command
             $type = $this->types[strtolower($type)].($required?'!':'');
             $fields_contents = $this->getStubContents(['FIELD_NAME'=>$name,'FIELD_TYPE'=>$type], 'field');
             if($index == $total-1){
-                if($index==0){
-                    $fields.=$fields_contents;
-                }
+                $fields.="\t".$fields_contents;
             }else{
-                $fields.="\t".$fields_contents."\n";
+                if($index==0){
+                    $fields.=$fields_contents."\n";  
+                }else{
+                    $fields.="\t".$fields_contents."\n";
+                }
             }
         }
 
