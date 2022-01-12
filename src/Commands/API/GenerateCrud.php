@@ -4,9 +4,25 @@ namespace InfyOm\Generator\Commands\API;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Pluralizer;
+use Illuminate\Filesystem\Filesystem;
 
 class GenerateCrud extends Command
 {
+    protected $types = [
+        "increments" => "ID",
+        "string" => "String",
+        "varchar" => "String",
+        "json" => "String",
+        "text" => "String",
+        "longText" => "String",
+        "date" => "String",
+        "datetime" => "String",
+        "integer" => "Int",
+        "boolean" => "Boolean",
+        "float" => "Float",
+        "double" => "Float",
+    ];
     /**
      * The name and signature of the console command.
      *
@@ -22,13 +38,20 @@ class GenerateCrud extends Command
     protected $description = 'wrapper around infyom labs api_scaffold';
 
     /**
-     * Create a new command instance.
-     *
-     * @return void
+     * Filesystem instance
+     * @var Filesystem
      */
-    public function __construct()
+    protected $files;
+
+    /**
+     * Create a new command instance.
+     * @param Filesystem $files
+     */
+    public function __construct(Filesystem $files)
     {
         parent::__construct();
+
+        $this->files = $files;
     }
 
     /**
@@ -48,48 +71,118 @@ class GenerateCrud extends Command
         try {
             $model_files_path = config('infyom.laravel_generator.path.model_files');
             if (is_null($this->option('all'))) {
-                if(is_null($model_name) || is_null($file_name)){
-                    if(!is_null($model_name)){
+                if (is_null($model_name) || is_null($file_name)) {
+                    if (!is_null($model_name)) {
                         $file_name = strtolower($model_name) . '.json';
-                    }else{
+                    } else {
                         throw  new \Exception('command usage, php artisan crud:generate ModelName model_file.json (model_file is optional if it has the same name as model)');
                     }
-                    
                 }
                 $this->info("Generating Crud for $model_name...");
-                $this->generateCrud($model_name, "$model_files_path/$file_name", $pfx,$is_graphql);
+                $this->generateCrud($model_name, "$model_files_path/$file_name", $pfx, $is_graphql);
                 $this->info("Generated Crud Successfully");
             } else {
                 $models = str_getcsv($this->option('all'), ',');
                 foreach ($models as $index => $model_name) {
                     $index++;
-                    $file_path = "$model_files_path/".strtolower($model_name) . '.json';
+                    $file_path = "$model_files_path/" . strtolower($model_name) . '.json';
                     if (file_exists($file_path)) {
                         $this->info("$index) Generating Crud for $model_name...");
-                        $this->generateCrud($model_name,$file_path,$pfx,$is_graphql);
+                        $this->generateCrud($model_name, $file_path, $pfx, $is_graphql);
                         $this->info("Generated Successfully");
                     } else {
                         $this->info("$index) Skipping Crud for $model_name, $file_path does not exist");
                     }
                 }
             }
-
         } catch (\Exception $ex) {
-            $this->error("An error occurred : => ".$ex->getMessage());
+            $this->error("An error occurred : => " . $ex->getMessage());
         }
         return 0;
     }
 
-    private function generateCrud(string $model_name, string $file_path, $pfx,$is_graphql)
+    private function generateCrud(string $model_name, string $file_path, $pfx, $is_graphql)
     {
-       if($is_graphql){
-        Artisan::call("infyom:api $model_name
+        if ($is_graphql) {
+            Artisan::call("infyom:api $model_name
         --fieldsFile=$file_path --skip=views,menu,routes,controllers,tests
          --factory $pfx --no-interaction");
-       }else{
-        Artisan::call("infyom:api $model_name
+            $this->info("Generating Graphql types...");
+            $contents = json_decode(file_get_contents($file_path));
+            $this->generateTypes($contents, $model_name);
+        } else {
+            Artisan::call("infyom:api $model_name
         --fieldsFile=$file_path --skip=views,menu
         --seeder --factory $pfx --no-interaction");
-       }
+        }
+    }
+
+    private function generateTypes(array $eloquent_schema, string $model_name)
+    {
+        $fields = "";
+        foreach($eloquent_schema as $schema){
+            $name = $schema['name'];
+            $type = $schema['dbType'];
+            $fields_contents = $this->getStubContents(['FIELD_NAME'=>$name,'FIELD_TYPE'=>$type], 'field');
+            $fields.=$fields_contents."\n";
+        }
+
+        $variables = ['MODEL' => $this->getSingularClassName($model_name), 'FIELDS' => $fields];
+        $contents = $this->getStubContents($variables, 'schema');
+        $path = base_path('graphql').'\\' .strtolower($model_name) . '_schema.graphql';
+
+        $this->makeDirectory(dirname($path));
+
+        if (!$this->files->exists($path)) {
+            $this->files->put($path, $contents);
+            $this->info("Schema File : {$path} created");
+        } else {
+            $this->info("Schema File : {$path} already exits, delete first");
+        }
+    }
+
+    /**
+     * Return the Singular Capitalize Name
+     * @param $name
+     * @return string
+     */
+    public function getSingularClassName($name)
+    {
+        return ucwords(Pluralizer::singular($name));
+    }
+
+    /**
+     * Return the stub file path
+     * @return string
+     *
+     */
+    public function getStubPath($stub)
+    {
+        return __DIR__ . "/../../../templates/graphql/$stub.stub";
+    }
+
+    public function getStubContents($variables, $stub)
+    {
+        $path = $this->getStubPath($stub);
+        $contents = file_get_contents($path);
+        foreach ($variables as $search => $replace) {
+            $contents = str_replace('$' . $search . '$', $replace, $contents);
+        }
+        return $contents;
+    }
+
+    /**
+     * Build the directory for the class if necessary.
+     *
+     * @param  string  $path
+     * @return string
+     */
+    protected function makeDirectory($path)
+    {
+        if (!$this->files->isDirectory($path)) {
+            $this->files->makeDirectory($path, 0777, true, true);
+        }
+
+        return $path;
     }
 }
