@@ -128,10 +128,9 @@ class GenerateCrud extends Command
         foreach($eloquent_schema as $schema){
             $name = $schema->name;
             $type = $schema->dbType;
-            $validations = $schema->validations;
             $required = false;
-            if(!is_null($validations) && !empty($validations)){
-             $required = str_contains($validations,'required');
+            if(property_exists($schema,"validations")){
+             $required = str_contains($schema->validations,'required');
             }
             $type = $this->types[strtolower($type)].($required?'!':'');
             $fields_contents = $this->getStubContents(['FIELD_NAME'=>$name,'FIELD_TYPE'=>$type], 'field');
