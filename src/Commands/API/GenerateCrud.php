@@ -79,8 +79,13 @@ class GenerateCrud extends Command
                     }
                 }
                 $this->info("Generating Crud for $model_name...");
-                $this->generateCrud($model_name, "$model_files_path/$file_name", $pfx, $is_graphql);
-                $this->info("Generated Crud Successfully");
+                $file_path = "$model_files_path/$file_name";
+                if(file_exists($file_path)){
+                    $this->generateCrud($model_name, $file_path, $pfx, $is_graphql);
+                    $this->info("Generated Crud Successfully");
+                }else{
+                    $this->info("Skipping Crud for $model_name, $file_path does not exist"); 
+                }
             } else {
                 $models = str_getcsv($this->option('all'), ',');
                 foreach ($models as $index => $model_name) {
