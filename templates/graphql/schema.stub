@@ -1,3 +1,3 @@
-type $MODEL {
-    $FIELDS
+type $MODEL$ {
+    $FIELDS$
 }
