@@ -1,6 +1,7 @@
 type $MODEL$ {
     $FIELDS$
 }
+# Go ahead and add your queries, mutations, subscriptions, etc.
 
 # Copy and paste the following import statement into schema.graphql only once
 # import models/*.graphql
