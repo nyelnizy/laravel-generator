@@ -67,7 +67,7 @@ class GenerateCrud extends Command
         if ($this->option('prefix')) {
             $pfx = "--prefix=$model_name";
         }
-        $is_graphql = !is_null($this->option('graphql'));
+        $is_graphql = $this->option('graphql');
         try {
             $model_files_path = config('infyom.laravel_generator.path.model_files');
             if (is_null($this->option('all'))) {
@@ -108,7 +108,6 @@ class GenerateCrud extends Command
 
     private function generateCrud(string $model_name, string $file_path, $pfx, $is_graphql)
     {
-        var_dump($is_graphql);
         if ($is_graphql) {
             Artisan::call("infyom:api $model_name
         --fieldsFile=$file_path --skip=views,menu,routes,controllers,tests
