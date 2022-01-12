@@ -17,7 +17,7 @@ class GenerateCrud extends Command
         "text" => "String",
         "longText" => "String",
         "date" => "String",
-        "datetime" => "String",
+        "dateTime" => "String",
         "integer" => "Int",
         "boolean" => "Boolean",
         "float" => "Float",
@@ -109,16 +109,13 @@ class GenerateCrud extends Command
     private function generateCrud(string $model_name, string $file_path, $pfx, $is_graphql)
     {
         if ($is_graphql) {
-            $this->info("Starting...");
             Artisan::call("infyom:api $model_name
         --fieldsFile=$file_path --skip=views,menu,routes,controllers,tests
          --factory $pfx --no-interaction");
-         $this->info("Ending...");
             $this->info("Generating Graphql types...");
             $contents = json_decode(file_get_contents($file_path));
             $this->generateTypes($contents, $model_name);
         } else {
-            $this->info("No Gf...");
             Artisan::call("infyom:api $model_name
         --fieldsFile=$file_path --skip=views,menu
         --seeder --factory $pfx --no-interaction");
@@ -129,9 +126,9 @@ class GenerateCrud extends Command
     {
         $fields = "";
         foreach($eloquent_schema as $schema){
-            $name = $schema['name'];
-            $type = $schema['dbType'];
-            $validations = $schema['validations'];
+            $name = $schema->name;
+            $type = $schema->dbType;
+            $validations = $schema->validations;
             $required = false;
             if(!is_null($validations) && !empty($validations)){
              $required = str_contains($validations,'required');
