@@ -130,7 +130,7 @@ class GenerateCrud extends Command
             $name = $schema->name;
             $type = $schema->dbType;
             $required = false;
-            if(property_exists($schema,"validations")){
+            if(property_exists($schema,"validations") || $name==="id"){
              $required = str_contains($schema->validations,'required');
             }
             $type = $this->types[strtolower($type)].($required?'!':'');
