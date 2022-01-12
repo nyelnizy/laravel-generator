@@ -22,6 +22,7 @@ use InfyOm\Generator\Commands\Scaffold\ControllerGeneratorCommand;
 use InfyOm\Generator\Commands\Scaffold\RequestsGeneratorCommand;
 use InfyOm\Generator\Commands\Scaffold\ScaffoldGeneratorCommand;
 use InfyOm\Generator\Commands\Scaffold\ViewsGeneratorCommand;
+use Illuminate\Filesystem\Filesystem;
 
 class InfyOmGeneratorServiceProvider extends ServiceProvider
 {
@@ -119,7 +120,7 @@ class InfyOmGeneratorServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton('crud.generate', function ($app) {
-            return new GenerateCrud();
+            return new GenerateCrud(new Filesystem());
         });
 
         $this->app->singleton('crud.rollback', function ($app) {
