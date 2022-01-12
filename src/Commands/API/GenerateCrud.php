@@ -85,7 +85,7 @@ class GenerateCrud extends Command
        if($is_graphql){
         Artisan::call("infyom:api $model_name
         --fieldsFile=$file_path --skip=views,menu,routes,controllers,tests
-        --seeder --factory $pfx --no-interaction");
+         --factory $pfx --no-interaction");
        }else{
         Artisan::call("infyom:api $model_name
         --fieldsFile=$file_path --skip=views,menu
