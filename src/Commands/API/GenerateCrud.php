@@ -115,6 +115,7 @@ class GenerateCrud extends Command
             $this->info("Generating Graphql types...");
             $contents = json_decode(file_get_contents($file_path));
             $this->generateTypes($contents, $model_name);
+            $this->files->delete(app_path("Requets"));
         } else {
             Artisan::call("infyom:api $model_name
         --fieldsFile=$file_path --skip=views,menu
