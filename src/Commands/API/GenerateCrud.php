@@ -216,7 +216,7 @@ class GenerateCrud extends Command
     private function getType(string $t){
         $ty = "";
         foreach ($this->types as $key=>$type){
-            if(str_contains($t,$type)){
+            if(str_contains($t,$key)){
                 $ty = $type;
                 break;
             }
