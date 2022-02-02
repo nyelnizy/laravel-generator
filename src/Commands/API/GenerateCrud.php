@@ -156,7 +156,7 @@ class GenerateCrud extends Command
 
         $variables = ['MODEL' => $this->getSingularClassName($model_name), 'FIELDS' => $fields];
         $contents = $this->getStubContents($variables, 'schema');
-        $path = base_path('graphql/models').'\\' .strtolower($model_name) . '_schema.graphql';
+        $path = base_path('graphql/models').'/' .strtolower($model_name) . '_schema.graphql';
 
         $this->makeDirectory(dirname($path));
 
