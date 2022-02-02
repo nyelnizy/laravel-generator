@@ -223,4 +223,6 @@ return [
         'doctrine_mappings' => [],
     ],
 
+    'graphql'=>true,
+
 ];

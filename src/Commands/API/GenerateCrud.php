@@ -110,7 +110,7 @@ class GenerateCrud extends Command
     {
         if ($is_graphql) {
             Artisan::call("infyom:api $model_name
-        --fieldsFile=$file_path --skip=views,menu,routes,controllers,tests
+        --fieldsFile=$file_path --skip=views,menu,routes,controllers,tests,requests
          --factory $pfx --no-interaction");
             $this->info("Generating Graphql types...");
             $contents = json_decode(file_get_contents($file_path));

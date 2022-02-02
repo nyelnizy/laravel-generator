@@ -45,7 +45,7 @@ class ModelGenerator extends BaseGenerator
     public function generate()
     {
         $templateData = get_template('model.model', 'laravel-generator');
-
+        if($this->commandData->config)
         $templateData = $this->fillTemplate($templateData);
 
         FileUtil::createFile($this->path, $this->fileName, $templateData);
