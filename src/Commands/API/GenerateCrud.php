@@ -129,6 +129,9 @@ class GenerateCrud extends Command
         $fields = "";
         $total = count($eloquent_schema);
         foreach($eloquent_schema as $index=>$schema){
+            if(property_exists($schema,"type")){
+                continue;
+            }
             $name = $schema->name;
             $type = $schema->dbType;
             $required = false;
