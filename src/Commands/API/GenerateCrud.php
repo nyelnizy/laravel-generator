@@ -11,6 +11,7 @@ class GenerateCrud extends Command
 {
     protected $types = [
         "increments" => "ID",
+        "id" => "ID",
         "string" => "String",
         "varchar" => "String",
         "json" => "String",
