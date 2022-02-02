@@ -138,7 +138,7 @@ class GenerateCrud extends Command
             if($name==="id"){
                 $required = true;
             }
-            $type = $this->types[strtolower($type)].($required?'!':'');
+            $type = $this->getType(strtolower($type)).($required?'!':'');
             $fields_contents = $this->getStubContents(['FIELD_NAME'=>$name,'FIELD_TYPE'=>$type], 'field');
             if($index == $total-1){
                 $fields.="\t".$fields_contents;
@@ -208,5 +208,16 @@ class GenerateCrud extends Command
         }
 
         return $path;
+    }
+
+    private function getType(string $t){
+        $ty = "";
+        foreach ($this->types as $key=>$type){
+            if(str_contains($t,$type)){
+                $ty = $type;
+                break;
+            }
+        }
+        return $ty;
     }
 }
