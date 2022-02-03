@@ -30,13 +30,16 @@ $PRIMARY$
     ];
 
     /**
-     * Validation rules
-     *
-     * @var array
-     */
-    public static $rules = [
-        $RULES$
-    ];
+    * @param null $id
+    * @return array
+    */
+    public static function rules($id=null){
+            return [
+               $RULES$
+            ];
+    }
+
+
 
     $RELATIONS$
 }
