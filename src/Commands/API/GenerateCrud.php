@@ -13,6 +13,7 @@ class GenerateCrud extends Command
         "increments" => "ID",
         "id" => "ID",
         "string" => "String",
+        "enum" => "String",
         "varchar" => "String",
         "json" => "String",
         "text" => "String",
