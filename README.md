@@ -1,44 +1,38 @@
-<h1 align="center"><img src="https://assets.infyom.com/open-source/infyom-logo.png" alt="InfyOm"></h1>
+# laravel-generator
 
-InfyOm Laravel Generator
-==========================
+## Description
 
-[![Total Downloads](https://poser.pugx.org/infyomlabs/laravel-generator/downloads)](https://packagist.org/packages/infyomlabs/laravel-generator)
-[![Monthly Downloads](https://poser.pugx.org/infyomlabs/laravel-generator/d/monthly)](https://packagist.org/packages/infyomlabs/laravel-generator)
-[![Daily Downloads](https://poser.pugx.org/infyomlabs/laravel-generator/d/daily)](https://packagist.org/packages/infyomlabs/laravel-generator)
-[![License](https://poser.pugx.org/infyomlabs/laravel-generator/license)](https://packagist.org/packages/infyomlabs/laravel-generator)
+A fork of laravel infyom generator
 
-Generate Admin Panels CRUDs and APIs in Minutes with tons of other features and customizations with 3 different themes.  
-Read [Documentation](https://www.infyom.com/open-source) for detailed installation steps and usage.
 
-## About
-This is just a bit of modification to a fork of the original  [Laravel Infyom Labs Generator](https://www.infyom.com/open-source).
-
-### Installation
-<h2>Add the following repositories to your composer.json file</h2>
- "repositories": [
-        {
+## Install
+Add the following to composer.json file
+```bash
+    "repositories": [{
             "type": "vcs",
-            "url": "https://github.com/nyelnizy/swagger-generator.git"
-        },
-        {
-            "type": "vcs",
-            "url": "https://github.com/nyelnizy/laravel-generator.git"
-        },
-        {
-            "type": "vcs",
-            "url": "git@github.com:InfyOmLabs/swaggervel.git"
+            "url": "git@github.com:nyelnizy/laravel-generator.git"
         }
     ],
+```
+Add the dependency to require block
+```bash
+  "infyomlabs/laravel-generator": "dev-fix-1.1"
+```
+Run
+```bash
+  composer update
+```
 
-<h2>Add the following dependency to require block in composer.json</h2>
+## Contributing
 
- "infyomlabs/laravel-generator": "dev-fix-1.0",
- "appointer/swaggervel": "dev-master"
+Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
- <b>Then run composer update</b>
 
-<b>
-run php artisan infyom:publish &&
-php artisan vendor:publish --provider="InfyOm\Generator\InfyOmGeneratorServiceProvider"
-</b>
+## Security
+
+If you discover any security-related issues, please email daniel@hardcorp.org instead of using the issue tracker.
+
+
+## License
+
+The MIT License (MIT). Please see [License File](/LICENSE.md) for more information.
