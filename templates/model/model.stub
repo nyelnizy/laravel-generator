@@ -30,15 +30,12 @@ $PRIMARY$
     ];
 
     /**
-    * @param null $id
-    * @return array
+    * 
+    * @var array
     */
-    public static function rules($id=null){
-            return [
+    public static $rules =[
                $RULES$
             ];
-    }
-
 
 
     $RELATIONS$
