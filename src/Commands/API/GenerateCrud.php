@@ -121,7 +121,7 @@ class GenerateCrud extends Command
         } else {
             Artisan::call("infyom:api $model_name
         --fieldsFile=$file_path --skip=views,menu
-        --seeder --factory $pfx --no-interaction");
+        --factory $pfx --no-interaction");
         }
     }
 
