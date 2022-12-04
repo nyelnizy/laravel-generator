@@ -29,14 +29,14 @@ $PRIMARY$
         $CAST$
     ];
 
-    /**
-    * 
-    * @var array
+     /**
+    * @param null $id
+    * @return array
     */
-    public static $rules =[
+    public static function rules($id=null){
+        return [
                $RULES$
-            ];
-
-
+        ];
+    }
     $RELATIONS$
 }
